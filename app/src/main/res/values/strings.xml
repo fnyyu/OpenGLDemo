@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">OpenGLDemo</string>
+
+    <string name="noSupport">系统不支持OpenGL</string>
+
+    <string name="circle">Circle</string>
+    <string name="cube">Cube</string>
+    <string name="sphere">Sphere</string>
+    <string name="cone">Cone</string>
+    <string name="graphic">Graphic</string>
+
+</resources>
