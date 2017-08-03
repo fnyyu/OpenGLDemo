@@ -43,10 +43,8 @@ public class DrawActivity extends AppCompatActivity {
                 mMySurfaceView.setRenderer(new CubeRenderer(this));
                 break;
             case "Sphere":
-                mMySurfaceView.setRenderer(new CircleRenderer(this));
                 break;
             case "Cone":
-                mMySurfaceView.setRenderer(new CircleRenderer(this));
                 break;
             default:
                 mMySurfaceView.setRenderer(new CircleRenderer(this));
