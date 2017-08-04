@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    tools:context="com.fny.program.opengldemo.MainActivity">
+    tools:mContext="com.fny.program.opengldemo.MainActivity">
 
     <Button
         android:background="@drawable/button_shape"
@@ -36,6 +36,14 @@
         android:layout_margin="10dp"
         android:id="@+id/bt_sphere"
         android:text="@string/sphere"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:background="@drawable/button_shape"
+        android:layout_margin="10dp"
+        android:id="@+id/bt_earth"
+        android:text="@string/earth"
         android:layout_width="100dp"
         android:layout_height="wrap_content" />
 

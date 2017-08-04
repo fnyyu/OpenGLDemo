@@ -37,8 +37,8 @@ public class MySurfaceView extends GLSurfaceView {
 //                }
                 break;
             case ACTION_UP:
-//                MatrixState.rotate(30, 0, 1, 0);
-                MatrixState.scale(0.4f, 1.5f, 0.6f);
+                MatrixState.rotate(30, 0, 1, 0);
+//                MatrixState.scale(0.4f, 1.5f, 0.6f);
                 break;
 
 

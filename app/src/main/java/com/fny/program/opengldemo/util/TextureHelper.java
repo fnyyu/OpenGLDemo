@@ -16,7 +16,7 @@ public class TextureHelper {
 
     private static final String TAG = "TextureHelper";
 
-    public static int loadTexture(Context context, int resourceId) {
+    public static int loadTexture(Context context, int resourceId, boolean isRepeat) {
         final int[] textureObjectId = new int[1];
         glGenTextures(1, textureObjectId, 0);   // 创建新的纹理对象
 
@@ -40,7 +40,10 @@ public class TextureHelper {
             return 0;
         }
         glBindTexture(GL_TEXTURE_2D, textureObjectId[0]); //绑定二维纹理对象
-
+        if(isRepeat){
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        }
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); //缩小使用三线过滤
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);  //放大使用双线过滤
         texImage2D(GL_TEXTURE_2D, 0, bitmap, 0);

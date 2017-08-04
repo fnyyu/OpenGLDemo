@@ -3,12 +3,14 @@ package com.fny.program.opengldemo;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.fny.program.opengldemo.render.CircleRenderer;
 import com.fny.program.opengldemo.render.CubeRenderer;
+import com.fny.program.opengldemo.render.SphereRenderer;
 
 /**
  * Created by cvter on 2017/8/3.
@@ -43,8 +45,12 @@ public class DrawActivity extends AppCompatActivity {
                 mMySurfaceView.setRenderer(new CubeRenderer(this));
                 break;
             case "Sphere":
+                mMySurfaceView.setRenderer(new SphereRenderer(this));
+                mMySurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
                 break;
             case "Cone":
+                break;
+            case "Earth":
                 break;
             default:
                 mMySurfaceView.setRenderer(new CircleRenderer(this));

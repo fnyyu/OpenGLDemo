@@ -20,7 +20,7 @@ import static com.fny.program.opengldemo.util.Constants.BYTE_PRE_FLOAT;
 
 public class Circle {
 
-    private Context context;
+    private Context mContext;
 
     private float x;
     private float y;
@@ -38,8 +38,8 @@ public class Circle {
 
     private float[] projectMatrix = new float[16];
 
-    public Circle(Context context, int count) {
-        this.context = context;
+    public Circle(Context mContext, int count) {
+        this.mContext = mContext;
         this.count = count;
         x = 0f;
         y = 0f;
@@ -80,10 +80,10 @@ public class Circle {
     private void getProgram() {
         //获取顶点着色器文本
         String vertexShaderSource = ResourceReader
-                .readFileFromResource(context, R.raw.circle_vertex_shader);
+                .readFileFromResource(mContext, R.raw.circle_vertex_shader);
         //获取片段着色器文本
         String fragmentShaderSource = ResourceReader
-                .readFileFromResource(context, R.raw.circle_fragment_shader);
+                .readFileFromResource(mContext, R.raw.circle_fragment_shader);
 
         //获取program的id
         program = ShaderHelper.buildProgram(vertexShaderSource, fragmentShaderSource);

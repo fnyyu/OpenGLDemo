@@ -8,5 +8,6 @@
     <string name="sphere">Sphere</string>
     <string name="cone">Cone</string>
     <string name="graphic">Graphic</string>
+    <string name="earth">Earth</string>
 
 </resources>
