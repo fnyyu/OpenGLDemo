@@ -19,7 +19,7 @@ import java.util.List;
  * Created by cvter on 2017/8/4.
  */
 
-public class Sphere {
+public class Earth {
 
     private Context mContext;
 
@@ -36,7 +36,7 @@ public class Sphere {
     private int program;
 
 
-    public Sphere(Context context) {
+    public Earth(Context context) {
         this.mContext = context;
 
         initVertexData();

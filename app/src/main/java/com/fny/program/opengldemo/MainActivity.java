@@ -26,22 +26,27 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.bt_circle:
                 intent.putExtra(getString(R.string.graphic), getString(R.string.circle));
+                startActivity(intent);
                 break;
             case R.id.bt_cube:
                 intent.putExtra(getString(R.string.graphic), getString(R.string.cube));
+                startActivity(intent);
                 break;
             case R.id.bt_cone:
                 intent.putExtra(getString(R.string.graphic), getString(R.string.cone));
+                startActivity(intent);
                 break;
             case R.id.bt_sphere:
-                intent.putExtra(getString(R.string.graphic), getString(R.string.sphere));
+                Intent intent1 = new Intent(this, TestActivity.class);
+                startActivity(intent1);
                 break;
             case R.id.bt_earth:
                 intent.putExtra(getString(R.string.graphic), getString(R.string.earth));
+                startActivity(intent);
                 break;
             default:
                 break;
         }
-        startActivity(intent);
+
     }
 }

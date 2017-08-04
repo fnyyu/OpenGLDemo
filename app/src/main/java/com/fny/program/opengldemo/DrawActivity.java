@@ -3,7 +3,6 @@ package com.fny.program.opengldemo;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
-import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -44,13 +43,10 @@ public class DrawActivity extends AppCompatActivity {
             case "Cube":
                 mMySurfaceView.setRenderer(new CubeRenderer(this));
                 break;
-            case "Sphere":
+            case "Earth":
                 mMySurfaceView.setRenderer(new SphereRenderer(this));
-                mMySurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
                 break;
             case "Cone":
-                break;
-            case "Earth":
                 break;
             default:
                 mMySurfaceView.setRenderer(new CircleRenderer(this));

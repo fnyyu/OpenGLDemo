@@ -3,7 +3,7 @@ package com.fny.program.opengldemo.render;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 
-import com.fny.program.opengldemo.objects.Sphere;
+import com.fny.program.opengldemo.objects.Earth;
 import com.fny.program.opengldemo.util.MatrixState;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -19,11 +19,10 @@ import static android.opengl.GLES20.*;
 public class SphereRenderer implements GLSurfaceView.Renderer {
 
     private Context mContext;
-    private Sphere mSphere;
+    private Earth mEarth;
 
     public SphereRenderer(Context context) {
         this.mContext = context;
-        mSphere = new Sphere(mContext);
     }
 
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -31,6 +30,7 @@ public class SphereRenderer implements GLSurfaceView.Renderer {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);//设置屏幕背景色RGBA
         glEnable(GL_DEPTH_TEST);//打开深度检测
         glEnable(GL_CULL_FACE);//打开背面剪裁
+        mEarth = new Earth(mContext);
 
     }
 
@@ -45,7 +45,7 @@ public class SphereRenderer implements GLSurfaceView.Renderer {
     public void onDrawFrame(GL10 gl) {
 
         glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-        mSphere.draw();
+        mEarth.draw();
     }
 
 }
