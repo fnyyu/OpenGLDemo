@@ -21,7 +21,6 @@ import static android.opengl.GLES20.glViewport;
 public class ConeRenderer implements GLSurfaceView.Renderer {
 
     private Context mContext;
-    private Circle mCircle;
 
     public ConeRenderer(Context context) {
         this.mContext = context;
@@ -30,20 +29,17 @@ public class ConeRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-        mCircle = new Circle(mContext, 100);
     }
 
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         glViewport(0, 0, width, height);
-        mCircle.projectionMatrix(width, height);
     }
 
     @Override
     public void onDrawFrame(GL10 gl) {
         glClear(GL_COLOR_BUFFER_BIT);
-        mCircle.draw();
 
     }
 

@@ -8,8 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.fny.program.opengldemo.render.CircleRenderer;
+import com.fny.program.opengldemo.render.ConeRenderer;
 import com.fny.program.opengldemo.render.CubeRenderer;
-import com.fny.program.opengldemo.render.SphereRenderer;
+import com.fny.program.opengldemo.render.EarthRenderer;
 
 /**
  * Created by cvter on 2017/8/3.
@@ -44,9 +45,10 @@ public class DrawActivity extends AppCompatActivity {
                 mMySurfaceView.setRenderer(new CubeRenderer(this));
                 break;
             case "Earth":
-                mMySurfaceView.setRenderer(new SphereRenderer(this));
+                mMySurfaceView.setRenderer(new EarthRenderer(this));
                 break;
             case "Cone":
+                mMySurfaceView.setRenderer(new ConeRenderer(this));
                 break;
             default:
                 mMySurfaceView.setRenderer(new CircleRenderer(this));

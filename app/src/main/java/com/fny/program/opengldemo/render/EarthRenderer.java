@@ -16,12 +16,12 @@ import static android.opengl.GLES20.*;
  * OpenGl的Renderer
  */
 
-public class SphereRenderer implements GLSurfaceView.Renderer {
+public class EarthRenderer implements GLSurfaceView.Renderer {
 
     private Context mContext;
     private Earth mEarth;
 
-    public SphereRenderer(Context context) {
+    public EarthRenderer(Context context) {
         this.mContext = context;
     }
 
