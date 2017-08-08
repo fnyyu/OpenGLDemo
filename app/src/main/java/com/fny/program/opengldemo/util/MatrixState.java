@@ -16,6 +16,35 @@ public class MatrixState {
         Matrix.setIdentityM(mCMatrix, 0);
     }
 
+    //保护变换矩阵的栈
+    static float[][] mStack=new float[10][16];
+    static int stackTop=-1;
+
+    public static void setInitStack()//获取不变换初始矩阵
+    {
+        mCMatrix=new float[16];
+        Matrix.setRotateM(mCMatrix, 0, 0, 1, 0, 0);
+    }
+
+    public static void pushMatrix()//保护变换矩阵
+    {
+        stackTop++;
+        for(int i=0;i<16;i++)
+        {
+            mStack[stackTop][i]=mCMatrix[i];
+        }
+    }
+
+    public static void popMatrix()//恢复变换矩阵
+    {
+        for(int i=0;i<16;i++)
+        {
+            mCMatrix[i]=mStack[stackTop][i];
+        }
+        stackTop--;
+    }
+
+
     public static void translate(float x, float y, float z) {
         Matrix.translateM(mCMatrix, 0, x, y, z);
     }

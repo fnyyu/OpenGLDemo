@@ -17,7 +17,7 @@ import static android.opengl.GLES20.*;
  * OpenGl的Renderer
  */
 
-public class CubeRenderer implements GLSurfaceView.Renderer {
+public class CubeRenderer extends BaseRender implements GLSurfaceView.Renderer {
 
     private Context mContext;
     private Cube mCube;
@@ -38,7 +38,6 @@ public class CubeRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         glViewport(0, 0, width, height);
-
         float ratio = (float) width / height;
         MatrixState.setProjectFrustum(-ratio, ratio, -1, 1, 20, 100);
         MatrixState.setCamera(-16f, 8f, 45, 0f, 0f, 0f, 0f, 1.0f, 0.0f);

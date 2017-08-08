@@ -51,7 +51,7 @@ public class BallRender implements GLSurfaceView.Renderer {
         gl.glMaterialf(GL10.GL_FRONT_AND_BACK, GL10.GL_SHININESS, 96.0f);
 
         //光源位置
-        float[] light_position = {mLightX, mLightY, mLightZ, 0.0f};
+        float[] light_position = {10f, mLightY, mLightZ, 0.0f};
         ByteBuffer mpbb = ByteBuffer.allocateDirect(light_position.length*4);
         mpbb.order(ByteOrder.nativeOrder());
         FloatBuffer mat_posiBuf = mpbb.asFloatBuffer();

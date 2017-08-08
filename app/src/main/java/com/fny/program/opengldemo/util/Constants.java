@@ -7,4 +7,5 @@ package com.fny.program.opengldemo.util;
 public class Constants {
 
     public static final int BYTE_PRE_FLOAT = 4;
+    public static final float TOUCH_SCALE_FACTOR = 180.0f/720;
 }

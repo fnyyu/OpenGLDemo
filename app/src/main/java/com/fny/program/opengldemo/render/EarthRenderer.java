@@ -16,15 +16,17 @@ import static android.opengl.GLES20.*;
  * OpenGl的Renderer
  */
 
-public class EarthRenderer implements GLSurfaceView.Renderer {
+public class EarthRenderer extends BaseRender implements GLSurfaceView.Renderer {
 
     private Context mContext;
     private Earth mEarth;
 
     public EarthRenderer(Context context) {
+        super();
         this.mContext = context;
     }
 
+    @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);//设置屏幕背景色RGBA
@@ -34,18 +36,22 @@ public class EarthRenderer implements GLSurfaceView.Renderer {
 
     }
 
+    @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         glViewport(0, 0, width, height);
         float ratio = (float) width / height;
         MatrixState.setProjectFrustum(-ratio, ratio, -1, 1, 20, 100);
         MatrixState.setCamera(0, 0, 30, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
-
+        MatrixState.setInitStack();
     }
 
+    @Override
     public void onDrawFrame(GL10 gl) {
 
         glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-        mEarth.draw();
+        MatrixState.pushMatrix();
+        mEarth.draw(xAngle, yAngle);
+        MatrixState.popMatrix();
     }
 
 }

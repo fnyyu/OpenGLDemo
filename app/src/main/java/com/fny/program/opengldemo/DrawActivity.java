@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.fny.program.opengldemo.render.BaseRender;
 import com.fny.program.opengldemo.render.CircleRenderer;
 import com.fny.program.opengldemo.render.ConeRenderer;
 import com.fny.program.opengldemo.render.CubeRenderer;
@@ -37,25 +38,30 @@ public class DrawActivity extends AppCompatActivity {
         }
 
         mMySurfaceView.setEGLContextClientVersion(2);
-        switch (getIntent().getStringExtra(getString(R.string.graphic))){
-            case "Circle":
-                mMySurfaceView.setRenderer(new CircleRenderer(this));
-                break;
+
+        MySurfaceView.InitRender<BaseRender> set;
+        BaseRender render;
+
+        switch (getIntent().getStringExtra(getString(R.string.graphic))) {
             case "Cube":
-                mMySurfaceView.setRenderer(new CubeRenderer(this));
+                render = new CubeRenderer(this);
+                set = new MySurfaceView.InitRender<>(render);
                 break;
             case "Earth":
-                mMySurfaceView.setRenderer(new EarthRenderer(this));
+                render = new EarthRenderer(this);
+                set = new MySurfaceView.InitRender<>(render);
                 break;
             case "Cone":
-                mMySurfaceView.setRenderer(new ConeRenderer(this));
+                render = new ConeRenderer(this);
+                set = new MySurfaceView.InitRender<>(render);
                 break;
             default:
-                mMySurfaceView.setRenderer(new CircleRenderer(this));
+                render = new CircleRenderer(this);
+                set = new MySurfaceView.InitRender<>(render);
                 break;
 
         }
-
+        mMySurfaceView.setBaseRender(set.getObject());
         isRendererSet = true;
         setContentView(mMySurfaceView);
     }
@@ -71,7 +77,7 @@ public class DrawActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (isRendererSet ) {
+        if (isRendererSet) {
             mMySurfaceView.onResume();
         }
     }

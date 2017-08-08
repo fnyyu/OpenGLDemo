@@ -18,7 +18,7 @@ import static android.opengl.GLES20.glViewport;
  * OpenGl的Renderer
  */
 
-public class CircleRenderer implements GLSurfaceView.Renderer {
+public class CircleRenderer extends BaseRender implements GLSurfaceView.Renderer {
 
     private Context mContext;
     private Circle mCircle;

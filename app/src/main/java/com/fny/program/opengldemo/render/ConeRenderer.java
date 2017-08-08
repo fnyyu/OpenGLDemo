@@ -18,7 +18,7 @@ import static android.opengl.GLES20.glViewport;
  * OpenGl的Renderer
  */
 
-public class ConeRenderer implements GLSurfaceView.Renderer {
+public class ConeRenderer extends BaseRender implements GLSurfaceView.Renderer {
 
     private Context mContext;
 
