@@ -34,7 +34,7 @@ public class Cube {
     private int mUMatrixLocation;
     private int program;
 
-    static float vertices[] = {
+    private static float vertices[] = {
             //前面
             0,0,1.0f,
             1.0f,1.0f,1.0f,
@@ -116,7 +116,7 @@ public class Cube {
     };
 
     //顶点颜色值数组，每个顶点4个色彩值RGBA
-    static float colors[]=new float[]{
+    private static float colors[]=new float[]{
             //前面
             1,1,1,0,//中间为白色
             1,0,0,0,
@@ -246,7 +246,9 @@ public class Cube {
         GLES20.glUseProgram(program);
     }
 
-    public void draw(){
+    public void draw(float xAngle, float yAngle) {
+        MatrixState.rotate(xAngle, 1, 0, 0);//绕X轴转动
+        MatrixState.rotate(yAngle, 0, 1, 0);//绕Y轴转动
         GLES20.glUniformMatrix4fv(mUMatrixLocation, 1, false, MatrixState.getFinalMatrix(),0);
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, POSITION_COMPONENT_COUNT);
     }

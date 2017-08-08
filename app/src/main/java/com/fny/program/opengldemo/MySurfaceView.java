@@ -5,7 +5,6 @@ import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 
 import com.fny.program.opengldemo.render.BaseRender;
-import com.fny.program.opengldemo.util.Constants;
 
 /**
  * Created by cvter on 2017/7/28.
@@ -13,9 +12,9 @@ import com.fny.program.opengldemo.util.Constants;
 
 public class MySurfaceView extends GLSurfaceView {
 
-    private float mLastX = 0f;
-    private float mLastY = 0f;
-    private BaseRender render;
+    private BaseRender mRender;
+    private float mDownX = 0.0f;
+    private float mDownY = 0.0f;
 
     public static class InitRender<T extends BaseRender> {
 
@@ -31,8 +30,8 @@ public class MySurfaceView extends GLSurfaceView {
     }
 
     public void setBaseRender(BaseRender render) {
-        this.render = render;
-        setRenderer(render);
+        this.mRender = render;
+        setRenderer(mRender);
 
     }
 
@@ -42,26 +41,26 @@ public class MySurfaceView extends GLSurfaceView {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent e) {
-        float y = e.getY();
-        float x = e.getX();
-        switch (e.getAction()) {
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getActionMasked();
+        switch (action) {
             case MotionEvent.ACTION_DOWN:
-                break;
-            case MotionEvent.ACTION_MOVE:
-                float dy = y - mLastX;
-                float dx = x - mLastY;
-                render.yAngle -= dx * Constants.TOUCH_SCALE_FACTOR;
-                render.xAngle += dy * Constants.TOUCH_SCALE_FACTOR;
-                break;
+                mDownX = event.getX();
+                mDownY = event.getY();
+                return true;
             case MotionEvent.ACTION_UP:
-                break;
+                return true;
+            case MotionEvent.ACTION_MOVE:
+                float mX = event.getX();
+                float mY = event.getY();
+                mRender.xAngle += (mX-mDownX)/10;
+                mRender.yAngle -= (mY-mDownY)/10;
+                mDownX = mX;
+                mDownY = mY;
+                return true;
             default:
-                break;
+                return super.onTouchEvent(event);
         }
-        mLastY = y;//记录触控笔位置
-        mLastX = x;//记录触控笔位置
-        return true;
     }
 
 }

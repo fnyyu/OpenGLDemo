@@ -45,22 +45,19 @@ public class DrawActivity extends AppCompatActivity {
         switch (getIntent().getStringExtra(getString(R.string.graphic))) {
             case "Cube":
                 render = new CubeRenderer(this);
-                set = new MySurfaceView.InitRender<>(render);
                 break;
             case "Earth":
                 render = new EarthRenderer(this);
-                set = new MySurfaceView.InitRender<>(render);
                 break;
             case "Cone":
                 render = new ConeRenderer(this);
-                set = new MySurfaceView.InitRender<>(render);
                 break;
             default:
                 render = new CircleRenderer(this);
-                set = new MySurfaceView.InitRender<>(render);
                 break;
 
         }
+        set = new MySurfaceView.InitRender<>(render);
         mMySurfaceView.setBaseRender(set.getObject());
         isRendererSet = true;
         setContentView(mMySurfaceView);

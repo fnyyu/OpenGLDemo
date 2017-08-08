@@ -18,20 +18,20 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class BallRender implements GLSurfaceView.Renderer {
     // 环境光
-    private final float[] mat_ambient = { 0.5f, 0.6f, 0.8f, 1.0f };
-    private FloatBuffer mat_ambient_buf;
+    private static final float[] MAT_AMBIENT = { 0.5f, 0.6f, 0.8f, 1.0f };
+    private FloatBuffer matAmbientBuf;
     // 平行入射光
-    private final float[] mat_diffuse = { 0.4f, 0.6f, 0.8f, 1.0f };
-    private FloatBuffer mat_diffuse_buf;
+    private static final float[] MAT_DIFFUSE = { 0.4f, 0.6f, 0.8f, 1.0f };
+    private FloatBuffer matDiffuseBuf;
     // 高亮区域
-    private final float[] mat_specular = { 0.2f * 0.4f, 0.2f * 0.6f, 0.2f * 0.8f, 1.0f };
-    private FloatBuffer mat_specular_buf;
+    private static final float[] MAT_SPECULAR = { 0.2f * 0.4f, 0.2f * 0.6f, 0.2f * 0.8f, 1.0f };
+    private FloatBuffer matSpecularBuf;
 
     private Ball mSphere = new Ball();
 
     public volatile float mLightX = 10f;
     public volatile float mLightY = 10f;
-    public volatile float mLightZ = 10f;
+    private volatile float mLightZ = 10f;
 
     @Override
     public void onDrawFrame(GL10 gl) {
@@ -44,20 +44,19 @@ public class BallRender implements GLSurfaceView.Renderer {
         gl.glEnable(GL10.GL_LIGHT0);
 
         // 材质
-        gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_AMBIENT, mat_ambient_buf);
-        gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_DIFFUSE, mat_diffuse_buf);
-        gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SPECULAR, mat_specular_buf);
+        gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_AMBIENT, matAmbientBuf);
+        gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_DIFFUSE, matDiffuseBuf);
+        gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SPECULAR, matSpecularBuf);
         // 镜面指数 0~128 越小越粗糙
         gl.glMaterialf(GL10.GL_FRONT_AND_BACK, GL10.GL_SHININESS, 96.0f);
 
         //光源位置
-        float[] light_position = {10f, mLightY, mLightZ, 0.0f};
-        ByteBuffer mpbb = ByteBuffer.allocateDirect(light_position.length*4);
-        mpbb.order(ByteOrder.nativeOrder());
-        FloatBuffer mat_posiBuf = mpbb.asFloatBuffer();
-        mat_posiBuf.put(light_position);
-        mat_posiBuf.position(0);
-        gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, mat_posiBuf);
+        float[] lightPosition = {mLightX, mLightY, mLightZ, 0.0f};
+        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(lightPosition.length*4).order(ByteOrder.nativeOrder());
+        FloatBuffer matrixBuffer = byteBuffer.asFloatBuffer();
+        matrixBuffer.put(lightPosition);
+        matrixBuffer.position(0);
+        gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, matrixBuffer);
 
         gl.glTranslatef(0.0f, 0.0f, -3.0f);
         mSphere.draw(gl);
@@ -66,15 +65,11 @@ public class BallRender implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
 
-        // 设置输出屏幕大小
         gl.glViewport(0, 0, width, height);
 
         // 设置投影矩阵
         gl.glMatrixMode(GL10.GL_PROJECTION);
-        // 重置投影矩阵
         gl.glLoadIdentity();
-        // 设置视口大小
-        // gl.glFrustumf(0, width, 0, height, 0.1f, 100.0f);
 
         GLU.gluPerspective(gl, 90.0f, (float) width / height, 0.1f, 50.0f);
 
@@ -89,8 +84,8 @@ public class BallRender implements GLSurfaceView.Renderer {
     public void onSurfaceCreated(GL10 gl, EGLConfig arg1) {
         // 对透视进行修正
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_FASTEST);
-        // 背景：黑色
         gl.glClearColor(0, 0.0f, 0.0f, 0.0f);
+
         // 启动阴影平滑
         gl.glShadeModel(GL10.GL_SMOOTH);
 
@@ -105,22 +100,22 @@ public class BallRender implements GLSurfaceView.Renderer {
     }
 
     private void initBuffers() {
-        ByteBuffer bufTemp = ByteBuffer.allocateDirect(mat_ambient.length * 4);
+        ByteBuffer bufTemp = ByteBuffer.allocateDirect(MAT_AMBIENT.length * 4);
         bufTemp.order(ByteOrder.nativeOrder());
-        mat_ambient_buf = bufTemp.asFloatBuffer();
-        mat_ambient_buf.put(mat_ambient);
-        mat_ambient_buf.position(0);
+        matAmbientBuf = bufTemp.asFloatBuffer();
+        matAmbientBuf.put(MAT_AMBIENT);
+        matAmbientBuf.position(0);
 
-        bufTemp = ByteBuffer.allocateDirect(mat_diffuse.length * 4);
+        bufTemp = ByteBuffer.allocateDirect(MAT_DIFFUSE.length * 4);
         bufTemp.order(ByteOrder.nativeOrder());
-        mat_diffuse_buf = bufTemp.asFloatBuffer();
-        mat_diffuse_buf.put(mat_diffuse);
-        mat_diffuse_buf.position(0);
+        matDiffuseBuf = bufTemp.asFloatBuffer();
+        matDiffuseBuf.put(MAT_DIFFUSE);
+        matDiffuseBuf.position(0);
 
-        bufTemp = ByteBuffer.allocateDirect(mat_specular.length * 4);
+        bufTemp = ByteBuffer.allocateDirect(MAT_SPECULAR.length * 4);
         bufTemp.order(ByteOrder.nativeOrder());
-        mat_specular_buf = bufTemp.asFloatBuffer();
-        mat_specular_buf.put(mat_specular);
-        mat_specular_buf.position(0);
+        matSpecularBuf = bufTemp.asFloatBuffer();
+        matSpecularBuf.put(MAT_SPECULAR);
+        matSpecularBuf.position(0);
     }
 }

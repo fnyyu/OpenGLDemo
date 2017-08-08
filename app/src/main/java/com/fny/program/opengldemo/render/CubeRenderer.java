@@ -41,12 +41,15 @@ public class CubeRenderer extends BaseRender implements GLSurfaceView.Renderer {
         float ratio = (float) width / height;
         MatrixState.setProjectFrustum(-ratio, ratio, -1, 1, 20, 100);
         MatrixState.setCamera(-16f, 8f, 45, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+        MatrixState.setInitStack();
     }
 
     @Override
     public void onDrawFrame(GL10 gl) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        mCube.draw();
+        MatrixState.pushMatrix();
+        mCube.draw(xAngle, yAngle);
+        MatrixState.popMatrix();
     }
 
 }
