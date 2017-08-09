@@ -53,7 +53,7 @@ public class MatrixState {
         Matrix.rotateM(mCMatrix, 0, angle, x, y, z);
     }
 
-    public static void scale(float x, float y, float z) {
+    public static void zoom(float x, float y, float z) {
         Matrix.scaleM(mCMatrix, 0, x, y, z);
     }
 

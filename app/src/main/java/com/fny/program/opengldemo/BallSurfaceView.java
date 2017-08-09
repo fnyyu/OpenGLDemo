@@ -26,14 +26,16 @@ public class BallSurfaceView extends GLSurfaceView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getActionMasked();
-        switch (action) {
+
+        switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
                 mDownX = event.getX();
                 mDownY = event.getY();
                 return true;
-            case MotionEvent.ACTION_UP:
+
+            case MotionEvent.ACTION_POINTER_DOWN:
                 return true;
+
             case MotionEvent.ACTION_MOVE:
                 float mX = event.getX();
                 float mY = event.getY();
@@ -42,6 +44,13 @@ public class BallSurfaceView extends GLSurfaceView {
                 mDownX = mX;
                 mDownY = mY;
                 return true;
+
+            case MotionEvent.ACTION_POINTER_UP:
+                return true;
+
+            case MotionEvent.ACTION_UP:
+                return true;
+
             default:
                 return super.onTouchEvent(event);
         }
