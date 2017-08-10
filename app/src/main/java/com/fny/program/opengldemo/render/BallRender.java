@@ -4,6 +4,7 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 
 import com.fny.program.opengldemo.objects.Ball;
+import com.fny.program.opengldemo.util.MatrixState;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -18,13 +19,13 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class BallRender implements GLSurfaceView.Renderer {
     // 环境光
-    private static final float[] MAT_AMBIENT = { 0.5f, 0.6f, 0.8f, 1.0f };
+    private static final float[] MAT_AMBIENT = {0.5f, 0.6f, 0.8f, 1.0f};
     private FloatBuffer matAmbientBuf;
     // 平行入射光
-    private static final float[] MAT_DIFFUSE = { 0.4f, 0.6f, 0.8f, 1.0f };
+    private static final float[] MAT_DIFFUSE = {0.4f, 0.6f, 0.8f, 1.0f};
     private FloatBuffer matDiffuseBuf;
     // 高亮区域
-    private static final float[] MAT_SPECULAR = { 0.2f * 0.4f, 0.2f * 0.6f, 0.2f * 0.8f, 1.0f };
+    private static final float[] MAT_SPECULAR = {0.2f * 0.4f, 0.2f * 0.6f, 0.2f * 0.8f, 1.0f};
     private FloatBuffer matSpecularBuf;
 
     private Ball mSphere = new Ball();
@@ -32,6 +33,7 @@ public class BallRender implements GLSurfaceView.Renderer {
     public volatile float mLightX = 10f;
     public volatile float mLightY = 10f;
     private volatile float mLightZ = 10f;
+    public volatile float mScale = 1.0f;
 
     @Override
     public void onDrawFrame(GL10 gl) {
@@ -52,13 +54,14 @@ public class BallRender implements GLSurfaceView.Renderer {
 
         //光源位置
         float[] lightPosition = {mLightX, mLightY, mLightZ, 0.0f};
-        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(lightPosition.length*4).order(ByteOrder.nativeOrder());
+        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(lightPosition.length * 4).order(ByteOrder.nativeOrder());
         FloatBuffer matrixBuffer = byteBuffer.asFloatBuffer();
         matrixBuffer.put(lightPosition);
         matrixBuffer.position(0);
         gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, matrixBuffer);
 
         gl.glTranslatef(0.0f, 0.0f, -3.0f);
+        gl.glScalef(mScale, mScale, mScale);
         mSphere.draw(gl);
     }
 

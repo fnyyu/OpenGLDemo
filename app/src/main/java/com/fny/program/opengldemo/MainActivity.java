@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         intent = new Intent(this, DrawActivity.class);
     }
 
-    @OnClick({R.id.bt_circle, R.id.bt_cube, R.id.bt_cone, R.id.bt_sphere, R.id.bt_earth})
+    @OnClick({R.id.bt_circle, R.id.bt_cube, R.id.bt_cone, R.id.bt_sphere, R.id.bt_earth, R.id.bt_dog})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_circle:
@@ -42,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.bt_earth:
                 intent.putExtra(getString(R.string.graphic), getString(R.string.earth));
+                startActivity(intent);
+                break;
+            case R.id.bt_dog:
+                intent.putExtra(getString(R.string.graphic), getString(R.string.dog));
                 startActivity(intent);
                 break;
             default:

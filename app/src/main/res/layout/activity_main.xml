@@ -26,6 +26,14 @@
     <Button
         android:background="@drawable/button_shape"
         android:layout_margin="10dp"
+        android:id="@+id/bt_dog"
+        android:text="@string/dog"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:background="@drawable/button_shape"
+        android:layout_margin="10dp"
         android:id="@+id/bt_cone"
         android:text="@string/cone"
         android:layout_width="100dp"

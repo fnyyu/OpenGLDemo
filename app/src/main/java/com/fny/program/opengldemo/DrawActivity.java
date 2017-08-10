@@ -11,6 +11,7 @@ import com.fny.program.opengldemo.render.BaseRender;
 import com.fny.program.opengldemo.render.CircleRenderer;
 import com.fny.program.opengldemo.render.ConeRenderer;
 import com.fny.program.opengldemo.render.CubeRenderer;
+import com.fny.program.opengldemo.render.DogRenderer;
 import com.fny.program.opengldemo.render.EarthRenderer;
 
 /**
@@ -51,6 +52,9 @@ public class DrawActivity extends AppCompatActivity {
                 break;
             case "Cone":
                 render = new ConeRenderer(this);
+                break;
+            case "Dog":
+                render = new DogRenderer(this);
                 break;
             default:
                 render = new CircleRenderer(this);

@@ -52,7 +52,7 @@ public class MySurfaceView extends GLSurfaceView {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
-                mMode = Constants.TRANS;
+                mMode = Constants.ROTATE;
                 mDownX = event.getX();
                 mDownY = event.getY();
                 return true;
@@ -79,7 +79,7 @@ public class MySurfaceView extends GLSurfaceView {
                     }
                     mOldDistance = newDistance;
 
-                } else if (mMode == Constants.TRANS) {
+                } else if (mMode == Constants.ROTATE) {
                     float mX = event.getX();
                     float mY = event.getY();
 
