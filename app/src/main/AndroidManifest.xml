@@ -22,7 +22,10 @@
             android:excludeFromRecents="true"
             />
 
-        <activity android:name=".TestActivity"
+        <activity android:name=".BallActivity"
+            android:excludeFromRecents="true"/>
+
+        <activity android:name=".FountainActivity"
             android:excludeFromRecents="true"/>
     </application>
 

@@ -3,11 +3,13 @@ package com.fny.program.opengldemo;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.fny.program.opengldemo.view.BallSurfaceView;
+
 /**
  * Created by cvter on 2017/8/4.
  */
 
-public class TestActivity extends Activity {
+public class BallActivity extends Activity {
     private BallSurfaceView mySurfaceView;
     @Override
     public void onCreate(Bundle savedInstanceState) {

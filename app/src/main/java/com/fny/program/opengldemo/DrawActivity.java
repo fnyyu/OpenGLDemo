@@ -13,6 +13,7 @@ import com.fny.program.opengldemo.render.ConeRenderer;
 import com.fny.program.opengldemo.render.CubeRenderer;
 import com.fny.program.opengldemo.render.DogRenderer;
 import com.fny.program.opengldemo.render.EarthRenderer;
+import com.fny.program.opengldemo.view.MySurfaceView;
 
 /**
  * Created by cvter on 2017/8/3.

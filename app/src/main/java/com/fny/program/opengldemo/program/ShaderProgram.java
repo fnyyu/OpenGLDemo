@@ -14,6 +14,11 @@ import static android.opengl.GLES20.*;
 public class ShaderProgram {
 
 
+    static final String U_TIME = "u_Time";
+    static final String A_DIRECTION_VECTOR = "a_DirectionVector";
+    static final String A_PARTICLE_START_TIME = "a_ParticleStartTime";
+
+
     static final String U_MATRIX = "u_Matrix";
     static final String U_TEXTURE_UNIT = "u_TextureUnit";
 

@@ -28,5 +28,10 @@ public class VertexArray {
         mFloatBuffer.position(0);
     }
 
+    public void updateBuffer(float[] vertexData, int start, int count) {
+        mFloatBuffer.position(start);
+        mFloatBuffer.put(vertexData, start, count);
+        mFloatBuffer.position(0);
+    }
 
 }

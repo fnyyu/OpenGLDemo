@@ -1,4 +1,4 @@
-package com.fny.program.opengldemo;
+package com.fny.program.opengldemo.view;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
