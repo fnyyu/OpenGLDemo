@@ -50,7 +50,7 @@ public class MatrixState {
     }
 
     public static void rotate(float angle, float x, float y, float z) {// 设置绕xyz轴移动
-        Matrix.rotateM(mCMatrix, 0, angle, x, y, z);
+        Matrix.rotateM(mCMatrix, 0, -angle, x, y, z);
     }
 
     public static void zoom(float x, float y, float z) {

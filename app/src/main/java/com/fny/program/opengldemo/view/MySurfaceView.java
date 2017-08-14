@@ -86,8 +86,8 @@ public class MySurfaceView extends GLSurfaceView {
                     if (Math.abs(mX - mDownX) < mMinDistance && Math.abs(mY - mDownY) < mMinDistance) {
                         return true;
                     }
-                    mRender.xAngle -= (mX - mDownX) / 10;
-                    mRender.yAngle += (mY - mDownY) / 10;
+                    mRender.xAngle += (mX - mDownX) / 6f;
+                    mRender.yAngle += (mY - mDownY) / 6f;
                     mDownX = mX;
                     mDownY = mY;
                 }

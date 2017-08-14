@@ -125,8 +125,8 @@ public class Cone {
     }
 
     public void draw(float xAngle, float yAngle){
-        MatrixState.rotate(xAngle, 1, 0, 0);//绕X轴转动
-        MatrixState.rotate(yAngle, 0, 1, 0);//绕Y轴转动
+        MatrixState.rotate(-xAngle, 0f, 1f, 0f);//绕X轴转动
+        MatrixState.rotate(-yAngle, 1f, 0f, 0f);//绕Y轴转动
         GLES20.glUniformMatrix4fv(mUMatrixLocation, 1, false, MatrixState.getFinalMatrix(),0);
 
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, POSITION_COMPONENT_COUNT);
