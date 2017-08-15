@@ -47,29 +47,7 @@ public class BallSurfaceView extends GLSurfaceView {
                 return true;
 
             case MotionEvent.ACTION_MOVE:
-                if (mMode == Constants.ROTATE){
-                    float mX = event.getX();
-                    float mY = event.getY();
-                    if (Math.abs(mX - mDownX) < mMinDistance && Math.abs(mY - mDownY) < mMinDistance) {
-                        return true;
-                    }
-                    mRenderer.mLightX += (mX-mDownX)/10;
-                    mRenderer.mLightY -= (mY-mDownY)/10;
-                    mDownX = mX;
-                    mDownY = mY;
-                }else if (mMode == Constants.ZOOM){
-                    float newDistance = calculateDistance(event);
-
-                    if (Math.abs(newDistance - mOldDistance) < mMinDistance || newDistance <= 10f) {
-                        return true;
-                    }
-
-                    if (Math.abs(newDistance - mOldDistance) > 2f) {
-                        mRenderer.mScale = newDistance / mOldDistance;
-                    }
-                    mOldDistance = newDistance;
-                }
-
+                actionMove(event);
                 return true;
 
             case MotionEvent.ACTION_POINTER_UP:
@@ -80,6 +58,32 @@ public class BallSurfaceView extends GLSurfaceView {
             default:
                 return super.onTouchEvent(event);
         }
+    }
+
+    private void actionMove(MotionEvent event) {
+        if (mMode == Constants.ROTATE) {
+            float mX = event.getX();
+            float mY = event.getY();
+            if (Math.abs(mX - mDownX) < mMinDistance && Math.abs(mY - mDownY) < mMinDistance) {
+                return;
+            }
+            mRenderer.mLightX += (mX - mDownX) / 10;
+            mRenderer.mLightY -= (mY - mDownY) / 10;
+            mDownX = mX;
+            mDownY = mY;
+        } else if (mMode == Constants.ZOOM) {
+            float newDistance = calculateDistance(event);
+
+            if (Math.abs(newDistance - mOldDistance) < mMinDistance || newDistance <= 10f) {
+                return;
+            }
+
+            if (Math.abs(newDistance - mOldDistance) > 2f) {
+                mRenderer.mScale = newDistance / mOldDistance;
+            }
+            mOldDistance = newDistance;
+        }
+
     }
 
     private float calculateDistance(MotionEvent event) {

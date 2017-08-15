@@ -17,30 +17,27 @@ public class MatrixState {
     }
 
     //保护变换矩阵的栈
-    static float[][] mStack=new float[10][16];
-    static int stackTop=-1;
+    private static float[][] mStack = new float[10][16];
+    private static int stackTop = -1;
+
+    // 获取具体物体的总变换矩阵
+    private static float[] mMVPMatrix = new float[16];
 
     public static void setInitStack()//获取不变换初始矩阵
     {
-        mCMatrix=new float[16];
+        mCMatrix = new float[16];
         Matrix.setRotateM(mCMatrix, 0, 0, 1, 0, 0);
     }
 
     public static void pushMatrix()//保护变换矩阵
     {
         stackTop++;
-        for(int i=0;i<16;i++)
-        {
-            mStack[stackTop][i]=mCMatrix[i];
-        }
+        System.arraycopy(mCMatrix, 0, mStack[stackTop], 0, 16);
     }
 
     public static void popMatrix()//恢复变换矩阵
     {
-        for(int i=0;i<16;i++)
-        {
-            mCMatrix[i]=mStack[stackTop][i];
-        }
+        System.arraycopy(mStack[stackTop], 0, mCMatrix, 0, 16);
         stackTop--;
     }
 
@@ -82,15 +79,11 @@ public class MatrixState {
         Matrix.frustumM(mSavedMatrix, 0, left, right, bottom, top, near, far);
     }
 
-    // 获取具体物体的总变换矩阵
-    static float[] mMVPMatrix = new float[16];
-
     public static float[] getFinalMatrix() {
 
         Matrix.multiplyMM(mMVPMatrix, 0, mMatrix, 0, mCMatrix, 0);
         Matrix.multiplyMM(mMVPMatrix, 0, mSavedMatrix, 0, mMVPMatrix, 0);
 
-//        Matrix.multiplyMM(mMVPMatrix, 0, mSavedMatrix, 0, mMatrix, 0);
         return mMVPMatrix;
     }
 }

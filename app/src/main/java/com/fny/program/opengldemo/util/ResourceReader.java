@@ -30,7 +30,7 @@ public class ResourceReader {
             }
 
         } catch (IOException | Resources.NotFoundException e) {
-            Log.getStackTraceString(e);
+            throw new ThrowError(e.getMessage());
         }
 
         return body.toString();

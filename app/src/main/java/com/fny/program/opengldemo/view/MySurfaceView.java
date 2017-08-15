@@ -65,33 +65,7 @@ public class MySurfaceView extends GLSurfaceView {
                 return true;
 
             case MotionEvent.ACTION_MOVE:
-
-                if (mMode == Constants.ZOOM) {
-                    float newDistance = calculateDistance(event);
-
-                    if (Math.abs(newDistance - mOldDistance) < mMinDistance || newDistance <= 10f) {
-                        return true;
-                    }
-
-                    if (Math.abs(newDistance - mOldDistance) > 2f) {
-                        float scale = newDistance / mOldDistance;
-                        MatrixState.zoom(scale, scale, scale);
-                    }
-                    mOldDistance = newDistance;
-
-                } else if (mMode == Constants.ROTATE) {
-                    float mX = event.getX();
-                    float mY = event.getY();
-
-                    if (Math.abs(mX - mDownX) < mMinDistance && Math.abs(mY - mDownY) < mMinDistance) {
-                        return true;
-                    }
-                    mRender.xAngle += (mX - mDownX) / 6f;
-                    mRender.yAngle += (mY - mDownY) / 6f;
-                    mDownX = mX;
-                    mDownY = mY;
-                }
-
+                actionMove(event);
                 return true;
 
             case MotionEvent.ACTION_POINTER_UP:
@@ -102,6 +76,35 @@ public class MySurfaceView extends GLSurfaceView {
             default:
                 return super.onTouchEvent(event);
         }
+    }
+
+    private void actionMove(MotionEvent event) {
+        if (mMode == Constants.ZOOM) {
+            float newDistance = calculateDistance(event);
+
+            if (Math.abs(newDistance - mOldDistance) < mMinDistance || newDistance <= 10f) {
+                return;
+            }
+
+            if (Math.abs(newDistance - mOldDistance) > 2f) {
+                float scale = newDistance / mOldDistance;
+                MatrixState.zoom(scale, scale, scale);
+            }
+            mOldDistance = newDistance;
+
+        } else if (mMode == Constants.ROTATE) {
+            float mX = event.getX();
+            float mY = event.getY();
+
+            if (Math.abs(mX - mDownX) < mMinDistance && Math.abs(mY - mDownY) < mMinDistance) {
+                return;
+            }
+            mRender.xAngle += (mX - mDownX) / 6f;
+            mRender.yAngle += (mY - mDownY) / 6f;
+            mDownX = mX;
+            mDownY = mY;
+        }
+
     }
 
     private float calculateDistance(MotionEvent event) {

@@ -15,7 +15,7 @@ public class BallActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mySurfaceView=new BallSurfaceView(this); //创建MysurfaceView对象
+        mySurfaceView=new BallSurfaceView(this); //创建MySurfaceView对象
         mySurfaceView.requestFocus();           //获取焦点
         mySurfaceView.setFocusableInTouchMode(true);  //设置为可触控
         setContentView(mySurfaceView);

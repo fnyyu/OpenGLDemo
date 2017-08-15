@@ -14,15 +14,13 @@ import static android.opengl.GLUtils.*;
 
 public class TextureHelper {
 
-    private static final String TAG = "TextureHelper";
-
     public static int loadTexture(Context context, int resourceId, boolean isRepeat) {
         final int[] textureObjectId = new int[1];
         glGenTextures(1, textureObjectId, 0);   // 创建新的纹理对象
 
         if (textureObjectId[0] == 0){
-            if (LoggerConfig.ON){
-                Log.w(TAG, "Could not generate a new OpenGL texture object");
+            if (Constants.ON){
+                throw new ThrowError("Could not generate a new OpenGL texture object");
             }
             return 0;
         }
@@ -32,8 +30,8 @@ public class TextureHelper {
         final Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId, options);
 
         if (bitmap == null){
-            if (LoggerConfig.ON){
-                Log.w(TAG, "Resource ID" + resourceId + "could not be decoded");
+            if (Constants.ON){
+                throw new ThrowError("Resource ID" + resourceId + "could not be decoded");
             }
             glDeleteTextures(1, textureObjectId, 0);
             return 0;
@@ -63,8 +61,8 @@ public class TextureHelper {
         glGenTextures(1, textureObjectId, 0);
 
         if (textureObjectId[0] == 0){
-            if (LoggerConfig.ON){
-                Log.w(TAG, "Could not generate a new OpenGL texture object");
+            if (Constants.ON){
+                throw new ThrowError("Could not generate a new OpenGL texture object");
             }
             return 0;
         }
@@ -77,8 +75,8 @@ public class TextureHelper {
             cubeBitmap[i] = BitmapFactory.decodeResource(context.getResources(), cubeResources[i], options);
 
             if (cubeBitmap[i] == null){
-                if (LoggerConfig.ON){
-                    Log.w(TAG, "Resource ID" + cubeResources[i] + "could not be decoded");
+                if (Constants.ON){
+                    throw new ThrowError("Resource ID" + cubeResources[i] + "could not be decoded");
                 }
                 glDeleteTextures(1, textureObjectId, 0);
                 return 0;
