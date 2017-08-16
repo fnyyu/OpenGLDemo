@@ -33,6 +33,7 @@ public class VertexBuffer {
                 .order(ByteOrder.nativeOrder())
                 .asFloatBuffer()
                 .put(vertexData);
+
         floatBuffer.position(0);
 
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, floatBuffer.capacity() * Constants.BYTE_PRE_FLOAT,
