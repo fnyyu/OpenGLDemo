@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.opengl.GLSurfaceView;
+import android.os.SystemClock;
+import android.util.Log;
 
 import com.fny.program.opengldemo.R;
 import com.fny.program.opengldemo.objects.FountainShooter;
@@ -13,6 +15,7 @@ import com.fny.program.opengldemo.objects.SkyCube;
 import com.fny.program.opengldemo.program.FountainShaderProgram;
 import com.fny.program.opengldemo.program.HeightMapShaderProgram;
 import com.fny.program.opengldemo.program.SkyCubeShaderProgram;
+import com.fny.program.opengldemo.util.Constants;
 import com.fny.program.opengldemo.util.Geometry;
 import com.fny.program.opengldemo.util.MatrixHelper;
 import com.fny.program.opengldemo.util.TextureHelper;
@@ -30,6 +33,7 @@ import static android.opengl.GLES20.*;
 public class FountainRender implements GLSurfaceView.Renderer {
 
     private Context mContext;
+    private static final String TAG = "FountainRender";
 
     private float[] projectionMatrix = new float[16];
     private float[] viewMatrix = new float[16];  //应用于火花和高度图
@@ -60,6 +64,13 @@ public class FountainRender implements GLSurfaceView.Renderer {
 
     private float xRotation;
     private float yRotation;
+
+    private float xOffset;
+    private float yOffset;
+
+    private long frameStartTimeMs;
+    private long startTimeMs;
+    private int frameCount;
 
     public FountainRender(Context context) {
         this.mContext = context;
@@ -102,6 +113,8 @@ public class FountainRender implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 gl) {
+        limitFrameRate(24);
+        longFrameRate();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         drawHeightMap();
         drawSkyCube();
@@ -170,7 +183,7 @@ public class FountainRender implements GLSurfaceView.Renderer {
         glDepthFunc(GL_LESS);
     }
 
-    private void drawHeightMap(){
+    private void drawHeightMap() {
         setIdentityM(modelMatrix, 0);
         scaleM(modelMatrix, 0, 100f, 10f, 100f);
         updateMvpMatrix();
@@ -187,19 +200,46 @@ public class FountainRender implements GLSurfaceView.Renderer {
 
         System.arraycopy(viewMatrix, 0, viewSkyMatrix, 0, viewMatrix.length);
 
-        translateM(viewMatrix, 0, 0, -1.5f, -5f);
+        translateM(viewMatrix, 0, 0 - xOffset, -1.5f - yOffset, -5f);
     }
 
     //把矩阵合并成为模型视图投影矩阵
-    private void updateMvpMatrix(){
+    private void updateMvpMatrix() {
         multiplyMM(tempMatrix, 0, viewMatrix, 0, modelMatrix, 0);
         multiplyMM(modelViewProjectMatrix, 0, projectionMatrix, 0, tempMatrix, 0);
     }
 
     //把天空盒子矩阵合并成为模型视图投影矩阵
-    private void updateMvpMatrixForSky(){
+    private void updateMvpMatrixForSky() {
         multiplyMM(tempMatrix, 0, viewSkyMatrix, 0, modelMatrix, 0);
         multiplyMM(modelViewProjectMatrix, 0, projectionMatrix, 0, tempMatrix, 0);
+    }
+
+    //限制帧率
+    private void limitFrameRate(int framePerSecond) {
+        long elapsedFrameTimeMs = SystemClock.elapsedRealtime() - frameStartTimeMs;
+        long expectedFrameTimeMs = 1000 / framePerSecond;
+        long timesToSleepMs = expectedFrameTimeMs - elapsedFrameTimeMs;
+
+        if (timesToSleepMs > 0) {
+            SystemClock.sleep(timesToSleepMs);
+        }
+        frameStartTimeMs = SystemClock.elapsedRealtime();
+    }
+
+    //测量记录每秒帧数
+    private void longFrameRate() {
+        if (Constants.ON) {
+            long elapsedRealTimeMs = SystemClock.elapsedRealtime();
+            double elapsedSeconds = (elapsedRealTimeMs - startTimeMs) / 1000.0;
+
+            if (elapsedSeconds >= 10.0) {
+                Log.v(TAG, frameCount / elapsedSeconds + " fps");
+                startTimeMs = SystemClock.elapsedRealtime();
+                frameCount = 0;
+            }
+            frameCount ++;
+        }
     }
 
     public void handleTouchDrag(float deltaX, float deltaY) {
@@ -211,6 +251,12 @@ public class FountainRender implements GLSurfaceView.Renderer {
         } else if (yRotation > 90) {
             yRotation = 90;
         }
+        updateViewMatrix();
+    }
+
+    public void handleOffsetsChanged(float xOffset, float yOffset) {
+        this.xOffset = (xOffset - 0.5f) * 2.5f;
+        this.yOffset = (yOffset - 0.5f) * 2.5f;
         updateViewMatrix();
     }
 }

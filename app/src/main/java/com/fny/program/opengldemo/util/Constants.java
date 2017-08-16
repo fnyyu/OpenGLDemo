@@ -13,5 +13,5 @@ public class Constants {
     public static final int ROTATE = 1;
     public static final int ZOOM = 2;
 
-    static final boolean ON = true;
+    public static final boolean ON = true;
 }

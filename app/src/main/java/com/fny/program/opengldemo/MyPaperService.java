@@ -3,7 +3,9 @@ package com.fny.program.opengldemo;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
+import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.os.Build;
 import android.service.wallpaper.WallpaperService;
 import android.view.SurfaceHolder;
 import android.widget.Toast;
@@ -16,15 +18,17 @@ import com.fny.program.opengldemo.render.FountainRender;
 
 public class MyPaperService extends WallpaperService {
 
-    private GLEngine.WallPaperGLSurfaceView mSurfaceView;
-    private boolean isRendererSet = false;
-
     @Override
     public Engine onCreateEngine() {
         return new GLEngine();
     }
 
-    public class GLEngine extends Engine {
+    private class GLEngine extends Engine {
+
+        private FountainRender mRender;
+        private GLEngine.WallPaperGLSurfaceView mSurfaceView;
+        private boolean isRendererSet = false;
+
         @Override
         public void onCreate(SurfaceHolder surfaceHolder) {
             super.onCreate(surfaceHolder);
@@ -39,9 +43,11 @@ public class MyPaperService extends WallpaperService {
                 return;
             }
 
+            mRender = new FountainRender(MyPaperService.this);
             isRendererSet = true;
             mSurfaceView.setEGLContextClientVersion(2);
-            mSurfaceView.setRenderer(new FountainRender(MyPaperService.this));
+            mSurfaceView.setPreserveEGLContextOnPause(true); //保留EG上下文
+            mSurfaceView.setRenderer(mRender);
         }
 
         @Override
@@ -61,6 +67,18 @@ public class MyPaperService extends WallpaperService {
         public void onDestroy() {
             super.onDestroy();
             mSurfaceView.onWallPaperDestroy();
+        }
+
+        @Override
+        public void onOffsetsChanged(final float xOffset, final float yOffset,
+                                     float xOffsetStep, float yOffsetStep,
+                                     int xPixelOffset, int yPixelOffset) {
+            mSurfaceView.queueEvent(new Runnable() {
+                @Override
+                public void run() {
+                    mRender.handleOffsetsChanged(xOffset, yOffset);
+                }
+            });
         }
 
         class WallPaperGLSurfaceView extends GLSurfaceView{
